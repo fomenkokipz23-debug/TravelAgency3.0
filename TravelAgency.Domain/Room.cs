@@ -19,4 +19,27 @@ public class Room
     {
         return BasePrice;
     }
+
+    public static bool operator ==(Room? left, Room? right)
+    {
+        if (ReferenceEquals(left, right)) return true;
+        if (left is null || right is null) return false;
+        
+        return left.Number == right.Number && left.Type == right.Type;
+    }
+
+    public static bool operator !=(Room? left, Room? right)
+    {
+        return !(left == right);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Room room && this == room;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Number, Type);
+    }
 }
