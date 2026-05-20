@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace TravelAgency.Domain;
 
 public class Room
@@ -5,6 +8,8 @@ public class Room
     public int Number { get; set; }
     public string Type { get; set; } 
     public decimal BasePrice { get; set; }
+    
+    public HashSet<string> Amenities { get; set; } = new();
 
     public Room() { }
 
