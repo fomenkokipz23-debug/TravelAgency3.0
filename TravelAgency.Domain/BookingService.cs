@@ -1,6 +1,6 @@
 namespace TravelAgency.Domain;
 
-public class BookingService : IBookingService
+public class BookingService : IRoomReader, IBookingManager
 {
     private readonly HotelCatalog _catalog;
 
@@ -21,10 +21,11 @@ public class BookingService : IBookingService
 
     public Booking CreateBooking(Client client, Room room, DateTime checkIn, DateTime checkOut)
     {
+        if (checkOut <= checkIn)
+            throw new InvalidBookingDatesException(checkIn, checkOut);
+
         var booking = new Booking(client, room, checkIn, checkOut);
-        
         _ = _catalog + booking;
-        
         return booking;
     }
 
@@ -39,7 +40,6 @@ public class BookingService : IBookingService
         if (booking == null) return false;
 
         booking.Dispose();
-        
         return true;
     }
 }
